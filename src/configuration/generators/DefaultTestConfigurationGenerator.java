@@ -27,8 +27,6 @@ public class DefaultTestConfigurationGenerator {
         // generate Test Configuration
         generateTestConfiguration(testConfigurationObject);
 
-        System.out.println(testConfigurationObject.toString());
-
         return testConfigurationObject;
     }
 
@@ -63,12 +61,102 @@ public class DefaultTestConfigurationGenerator {
             // operation.setOperationId(path.getValue().);
 
             // TODO: POST
+            if (path.getValue().getPost() != null) {
+                Operation operation = new Operation();
+                operation.setTestPath(path.getKey());
+                operation.setMethod("POST");
+                operation.setOperationId(path.getValue().getPost().getOperationId());
+
+                generateParameters(path.getValue().getPost().getParameters(), operation);
+//                operation.setTestParameters();
+//                operation.setExpectedResponse();
+
+                operations.add(operation);
+            }
+
             // TODO: PUT
+            if (path.getValue().getPut() != null) {
+                Operation operation = new Operation();
+                operation.setTestPath(path.getKey());
+                operation.setMethod("PUT");
+                operation.setOperationId(path.getValue().getPut().getOperationId());
+
+                generateParameters(path.getValue().getPut().getParameters(), operation);
+//                operation.setTestParameters();
+//                operation.setExpectedResponse();
+
+                operations.add(operation);
+            }
+
             // TODO: PATCH
+            if (path.getValue().getPatch() != null) {
+                Operation operation = new Operation();
+                operation.setTestPath(path.getKey());
+                operation.setMethod("PATCH");
+                operation.setOperationId(path.getValue().getPatch().getOperationId());
+
+                generateParameters(path.getValue().getPatch().getParameters(), operation);
+//                operation.setTestParameters();
+//                operation.setExpectedResponse();
+
+                operations.add(operation);
+            }
+
             // TODO: OPTIONS
+            if (path.getValue().getOptions() != null) {
+                Operation operation = new Operation();
+                operation.setTestPath(path.getKey());
+                operation.setMethod("OPTIONS");
+                operation.setOperationId(path.getValue().getOptions().getOperationId());
+
+                generateParameters(path.getValue().getOptions().getParameters(), operation);
+//                operation.setTestParameters();
+//                operation.setExpectedResponse();
+
+                operations.add(operation);
+            }
+
             // TODO: HEAD
+            if (path.getValue().getHead() != null) {
+                Operation operation = new Operation();
+                operation.setTestPath(path.getKey());
+                operation.setMethod("HEAD");
+                operation.setOperationId(path.getValue().getHead().getOperationId());
+
+                generateParameters(path.getValue().getHead().getParameters(), operation);
+//                operation.setTestParameters();
+//                operation.setExpectedResponse();
+
+                operations.add(operation);
+            }
+
             // TODO: TRACE
+            if (path.getValue().getTrace() != null) {
+                Operation operation = new Operation();
+                operation.setTestPath(path.getKey());
+                operation.setMethod("TRACE");
+                operation.setOperationId(path.getValue().getTrace().getOperationId());
+
+                generateParameters(path.getValue().getTrace().getParameters(), operation);
+//                operation.setTestParameters();
+//                operation.setExpectedResponse();
+
+                operations.add(operation);
+            }
+
             // TODO: DELETE
+            if (path.getValue().getDelete() != null) {
+                Operation operation = new Operation();
+                operation.setTestPath(path.getKey());
+                operation.setMethod("DELETE");
+                operation.setOperationId(path.getValue().getDelete().getOperationId());
+
+                generateParameters(path.getValue().getDelete().getParameters(), operation);
+//                operation.setTestParameters();
+//                operation.setExpectedResponse();
+
+                operations.add(operation);
+            }
         }
     }
 
@@ -105,7 +193,7 @@ public class DefaultTestConfigurationGenerator {
         if (schema.getType().equals("boolean")) {
             generator.setType("RandomBooleanGenerator");
         } else if (schema.getType().equals("integer")) {
-            generator.setType("RandomIntegerGenerator");
+            generator.setType("RandomNumberGenerator");
         } else if (schema.getType().equals("string")) {
             generator.setType("RandomStringGenerator");
         }

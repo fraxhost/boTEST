@@ -33,7 +33,7 @@ public class Operation {
         this.method = method;
     }
 
-    public List getTestParameters() {
+    public List<TestParameter> getTestParameters() {
         return testParameters;
     }
 

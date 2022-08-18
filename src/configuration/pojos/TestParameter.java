@@ -32,11 +32,11 @@ public class TestParameter {
         this.weight = weight;
     }
 
-    public List getGenerators() {
+    public List<Generator> getGenerators() {
         return generators;
     }
 
-    public void setGenerators(List generators) {
+    public void setGenerators(List<Generator> generators) {
         this.generators = generators;
     }
 
