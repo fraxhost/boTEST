@@ -66,7 +66,6 @@ public class RandomStringGenerator {
         this.includeSpecialCharacters = includeSpecialCharacters;
     }
 
-
     public String nextValue() {
         String generatedString = null;
 

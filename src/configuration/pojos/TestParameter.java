@@ -46,7 +46,7 @@ public class TestParameter {
                 " \t\t\t\tname='" + name + '\'' +
                 ", \n\t\t\t\tin='" + in + '\'' +
                 ", \n\t\t\t\tweight=" + weight +
-                ", \n\t\t\t\tgenerators=" + generators +
+                ", \n\t\t\t\ttestcases.generators=" + generators +
                 "\n\t\t\t}";
     }
 }

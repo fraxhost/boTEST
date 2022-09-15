@@ -15,8 +15,6 @@ public class OpenApiSpecification {
 
         this.specification = openAPIV3Parser.read(location, null, parseOptions);
 //        System.out.println(specification.toString());
-
-        BoTestIO.writeToFile("src/target/petstore.txt", specification.toString());
     }
 
     public OpenAPI getSpecification() {
