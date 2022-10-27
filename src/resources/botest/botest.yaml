@@ -1,0 +1,76 @@
+---
+openapi: 3.0.1
+info:
+  title: botestWebApi
+  version: '1.0'
+servers:
+  - url: http://localhost:5096/
+paths:
+  "/api/WeatherForecast/GetOk":
+    get:
+      tags:
+        - WeatherForecast
+      operationId: GetWeatherForecast/GetOk
+      responses:
+        '200':
+          description: Success
+  "/api/WeatherForecast/GetNotFound":
+    get:
+      tags:
+        - WeatherForecast
+      operationId: GetWeatherForecast/GetNotFound
+      responses:
+        '200':
+          description: Success
+  "/api/WeatherForecast/GetError":
+    get:
+      tags:
+        - WeatherForecast
+      operationId: GetWeatherForecast/GetError
+      responses:
+        '200':
+          description: Success
+  "/api/WeatherForecast/GetWeatherWithCityId/{cityId}":
+    get:
+      tags:
+        - WeatherForecast
+      operationId: GetWeatherWithCityId
+      parameters:
+        - name: cityId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  "/api/WeatherForecast/GetWeatherWithCityName/{cityName}":
+    get:
+      tags:
+        - WeatherForecast
+      operationId: GetWeatherWithCityName
+      parameters:
+        - name: cityName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+  "/api/WeatherForecast/GetWeatherWithCityStatus/{cityStatus}":
+    get:
+      tags:
+        - WeatherForecast
+      operationId: GetWeatherWithCityStatus
+      parameters:
+        - name: cityStatus
+          in: path
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Success
+components: {}

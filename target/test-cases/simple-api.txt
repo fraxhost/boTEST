@@ -1,5 +1,5 @@
 [TestCase{
-	id='test_Lb3k0M4z8y1a_search', 
+	id='test_wH9cOlFqqaBk_search', 
 	faulty=false, 
 	faultyReason='none', 
 	operationId='search', 
@@ -9,11 +9,11 @@
 	outputFormat='null', 
 	headerParameters=null, 
 	pathParameters=null, 
-	queryParameters={market=x, query=ezlY, type=S}, 
+	queryParameters={market=StwQjUNxb, query=, type=wJ}, 
 	formParameters=null, 
 	bodyParameter='null'
 }, TestCase{
-	id='test_ykVEdh5TSWeq_findArtistById', 
+	id='test_ZBfvl9KORcfb_findArtistById', 
 	faulty=false, 
 	faultyReason='none', 
 	operationId='findArtistById', 
@@ -22,12 +22,12 @@
 	inputFormat='application/json', 
 	outputFormat='null', 
 	headerParameters=null, 
-	pathParameters={artistId=-1095094423}, 
+	pathParameters={artistId=1465432600}, 
 	queryParameters=null, 
 	formParameters=null, 
 	bodyParameter='null'
 }, TestCase{
-	id='test_GZNMjYO6jT1n_getArtists', 
+	id='test_aC4GtD0UAILC_getArtists', 
 	faulty=false, 
 	faultyReason='none', 
 	operationId='getArtists', 
@@ -37,7 +37,7 @@
 	outputFormat='null', 
 	headerParameters=null, 
 	pathParameters=null, 
-	queryParameters={isAlive=false, nationality=UesT, ageUnder=1352449474, ageOver=-296179592, name=joFOztWp, age=-576968091}, 
+	queryParameters={isAlive=true, nationality=CeBCPLWRz, ageUnder=-2093465843, ageOver=-614581097, name=LJpPjODFxZ, age=-279041165}, 
 	formParameters=null, 
 	bodyParameter='null'
 }]

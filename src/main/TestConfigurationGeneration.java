@@ -12,7 +12,8 @@ import java.util.List;
 
 
 public class TestConfigurationGeneration {
-    private static String openApiSpecificationPath= "src/resources/simple_api/simple-api.yaml";
+//    private static String openApiSpecificationPath= "src/resources/simple_api/simple-api.yaml";
+    private static String openApiSpecificationPath= "src/resources/botest/botest.yaml";
 
     public static void main(String[] args) {
         // load specification
@@ -29,23 +30,24 @@ public class TestConfigurationGeneration {
         RestAssuredTestWriter testWriter = new RestAssuredTestWriter(openApiSpecification, testCases);
         String testClass = testWriter.writeTest();
 
-        // execute tests
-        JUnitTestRunner testRunner = new JUnitTestRunner("SimpleAPI");
 
         // write specification to file
-        BoTestIO.writeToFile("E:\\Programming\\Java\\BoTest\\target\\specification\\simple-api.txt",
-                openApiSpecification.getSpecification().toString());
+//        BoTestIO.writeToFile("E:\\Programming\\Java\\BoTest\\target\\specification\\botest.txt",
+//                openApiSpecification.getSpecification().toString());
         // write configuration to file
-        BoTestIO.writeToFile("E:\\Programming\\Java\\BoTest\\target\\test-configuration\\simple-api.txt",
-                testConfigurationObject.toString());
+//        BoTestIO.writeToFile("E:\\Programming\\Java\\BoTest\\target\\test-configuration\\petstore.txt",
+//                testConfigurationObject.toString());
         // write test-cases to file
-        BoTestIO.writeToFile("E:\\Programming\\Java\\BoTest\\target\\test-cases\\simple-api.txt",
-                testCases.toString());
+//        BoTestIO.writeToFile("E:\\Programming\\Java\\BoTest\\target\\test-cases\\petstore.txt",
+//                testCases.toString());
         // write test-class to file
-        BoTestIO.writeToFile("E:\\Programming\\Java\\BoTest\\target\\test-classes\\SimpleAPI.java",
-                testClass);
-        BoTestIO.writeToFile("E:\\Programming\\Java\\BoTest\\src\\runners\\SimpleAPI.java",
-                testClass);
+//        BoTestIO.writeToFile("E:\\Programming\\Java\\BoTest\\target\\test-classes\\Petstore.java",
+//                testClass);
+        BoTestIO.writeToFile("E:\\Programming\\Java\\BoTest\\src\\generation\\"+ testWriter.getClassName()
+                        + ".java", testClass);
+
+        // execute tests
+        JUnitTestRunner testRunner = new JUnitTestRunner(testWriter.getClassName());
 
         testRunner.execute();
     }

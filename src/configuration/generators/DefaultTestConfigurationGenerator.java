@@ -163,22 +163,27 @@ public class DefaultTestConfigurationGenerator {
     private void generateParameters(List<Parameter> parameters, Operation operation) {
         List<TestParameter> testParameters = new ArrayList<>();
 
-        for (Parameter parameter: parameters) {
-            TestParameter testParameter = new TestParameter();
+        if (parameters != null) {
+            for (Parameter parameter: parameters) {
+                TestParameter testParameter = new TestParameter();
 
-            testParameter.setName(parameter.getName());
-            testParameter.setIn(parameter.getIn());
-            testParameter.setWeight(0.5); // parameter is optional
+                testParameter.setName(parameter.getName());
+                testParameter.setIn(parameter.getIn());
+                testParameter.setWeight(0.5); // parameter is optional
 
-            if (parameter.getRequired() != null) {
-                if (parameter.getRequired()) {
-                    testParameter.setWeight(1); // parameter is required
+                if (parameter.getRequired() != null) {
+                    if (parameter.getRequired()) {
+                        testParameter.setWeight(1); // parameter is required
+                    }
                 }
+
+//                System.out.println("Enum###"+parameter.getSchema().getType()); array
+//                System.out.println("Enum###"+parameter.getSchema().toString()); details
+//                System.out.println("hehe###"+parameter.getSchema());
+                generateGenerators(testParameter, parameter.getSchema());
+
+                testParameters.add(testParameter);
             }
-
-            generateGenerators(testParameter, parameter.getSchema());
-
-            testParameters.add(testParameter);
         }
 
         operation.setTestParameters(testParameters);
@@ -189,6 +194,8 @@ public class DefaultTestConfigurationGenerator {
 
         Generator generator = new Generator();
         generator.setValid(true);
+
+//        System.out.println(schema.getType());
 
         if (schema.getType().equals("boolean")) {
             generator.setType("RandomBooleanGenerator");

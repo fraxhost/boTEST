@@ -121,6 +121,11 @@ public class AbstractTestCaseGenerator {
                 String randomBoolean = null;
                 String randomNumber = null;
 
+//                System.out.println(testParameter);
+
+                // TODO: Remove later
+                if (generatorType==null) continue;
+
                 if (generatorType.equals("RandomBooleanGenerator")) {
                     // TODO: use gen parameters to customize random boolean
                     randomBoolean = new RandomBooleanGenerator().nextValueAsString();

@@ -1,4 +1,4 @@
-package runners;
+package generation;
 import io.restassured.response.Response;
 import io.restassured.RestAssured;
 import org.junit.Assert;
@@ -9,21 +9,21 @@ import org.junit.Test;
 public class SimpleAPI {
 
 	@Before
-	public static void setUp() {
+	public void setUp() {
 		RestAssured.baseURI = "http://localhost:8800/api/v1";
 	}
 
 	@Test
-	public void test_Lb3k0M4z8y1a_search() {
-		String testResultId = "test_Lb3k0M4z8y1a_search";
+	public void test_wH9cOlFqqaBk_search() {
+		String testResultId = "test_wH9cOlFqqaBk_search";
 
 		try {
 			Response response = RestAssured
 					.given()
 						.log().all()
-						.queryParam("market", "x")
-						.queryParam("query", "ezlY")
-						.queryParam("type", "S")
+						.queryParam("market", "StwQjUNxb")
+						.queryParam("query", "")
+						.queryParam("type", "wJ")
 					.when()
 						.get("/search");
 
@@ -36,14 +36,14 @@ public class SimpleAPI {
 	}
 
 	@Test
-	public void test_ykVEdh5TSWeq_findArtistById() {
-		String testResultId = "test_ykVEdh5TSWeq_findArtistById";
+	public void test_ZBfvl9KORcfb_findArtistById() {
+		String testResultId = "test_ZBfvl9KORcfb_findArtistById";
 
 		try {
 			Response response = RestAssured
 					.given()
 						.log().all()
-						.pathParam("artistId", "-1095094423")
+						.pathParam("artistId", "1465432600")
 					.when()
 						.get("/artists/{artistId}");
 
@@ -56,19 +56,19 @@ public class SimpleAPI {
 	}
 
 	@Test
-	public void test_GZNMjYO6jT1n_getArtists() {
-		String testResultId = "test_GZNMjYO6jT1n_getArtists";
+	public void test_aC4GtD0UAILC_getArtists() {
+		String testResultId = "test_aC4GtD0UAILC_getArtists";
 
 		try {
 			Response response = RestAssured
 					.given()
 						.log().all()
-						.queryParam("isAlive", "false")
-						.queryParam("nationality", "UesT")
-						.queryParam("ageUnder", "1352449474")
-						.queryParam("ageOver", "-296179592")
-						.queryParam("name", "joFOztWp")
-						.queryParam("age", "-576968091")
+						.queryParam("isAlive", "true")
+						.queryParam("nationality", "CeBCPLWRz")
+						.queryParam("ageUnder", "-2093465843")
+						.queryParam("ageOver", "-614581097")
+						.queryParam("name", "LJpPjODFxZ")
+						.queryParam("age", "-279041165")
 					.when()
 						.get("/artists");
 

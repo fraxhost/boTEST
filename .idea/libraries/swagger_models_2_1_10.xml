@@ -40,8 +40,6 @@
       <root url="jar://$PROJECT_DIR$/src/lib/slf4j-api-1.7.25.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/lib/slf4j-ext-1.7.28.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/lib/json-path-4.2.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/rest-assured-4.2.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/lib/rest-assured-common-4.2.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/lib/xml-path-4.2.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/lib/commons-codec-1.11.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/lib/commons-lang3-3.11.jar!/" />
@@ -73,6 +71,7 @@
       <root url="jar://$PROJECT_DIR$/src/lib/jaxb-runtime-2.3.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/lib/stax-ex-1.8.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/lib/txw2-2.3.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/httpcore-4.4.6.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
