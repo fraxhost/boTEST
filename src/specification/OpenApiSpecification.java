@@ -1,5 +1,4 @@
-package main;
-
+package specification;
 
 import helpers.BoTestIO;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -14,7 +13,6 @@ public class OpenApiSpecification {
         ParseOptions parseOptions = new ParseOptions();
 
         this.specification = openAPIV3Parser.read(location, null, parseOptions);
-//        System.out.println(specification.toString());
     }
 
     public OpenAPI getSpecification() {

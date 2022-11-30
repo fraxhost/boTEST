@@ -1,6 +1,6 @@
 package writers;
 
-import main.OpenApiSpecification;
+import specification.OpenApiSpecification;
 import testcases.TestCase;
 
 import java.util.List;

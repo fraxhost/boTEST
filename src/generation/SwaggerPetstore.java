@@ -1,4 +1,4 @@
-package runners;
+package generation;
 import io.restassured.response.Response;
 import io.restassured.RestAssured;
 import org.junit.Assert;
@@ -6,28 +6,30 @@ import org.junit.Before;
 
 import org.junit.Test;
 
-public class SimpleAPI {
+import static org.junit.Assert.assertEquals;
+
+import static org.junit.Assert.assertTrue;
+
+public class SwaggerPetstore {
 
 	@Before
 	public void setUp() {
-		RestAssured.baseURI = "http://localhost:8800/api/v1";
+		RestAssured.baseURI = "https://petstore.swagger.io/v2";
 	}
 
 	@Test
-	public void test_wH9cOlFqqaBk_search() {
-		String testResultId = "test_wH9cOlFqqaBk_search";
+	public void test_rkQCRnnzsFGh_addPet() {
+		String testResultId = "test_rkQCRnnzsFGh_addPet";
 
 		try {
 			Response response = RestAssured
 					.given()
 						.log().all()
-						.queryParam("market", "StwQjUNxb")
-						.queryParam("query", "")
-						.queryParam("type", "wJ")
 					.when()
-						.get("/search");
+						.post("/pet");
 
 			response.then().log().all();
+			assertTrue("Status Code is less than 500", response.statusCode() < 500);
 			System.out.println("Test passed.");
 		} catch (RuntimeException ex) {
 			System.err.println(ex.getMessage());
@@ -36,18 +38,18 @@ public class SimpleAPI {
 	}
 
 	@Test
-	public void test_ZBfvl9KORcfb_findArtistById() {
-		String testResultId = "test_ZBfvl9KORcfb_findArtistById";
+	public void test_ebBXAbbCpv9b_updatePet() {
+		String testResultId = "test_ebBXAbbCpv9b_updatePet";
 
 		try {
 			Response response = RestAssured
 					.given()
 						.log().all()
-						.pathParam("artistId", "1465432600")
 					.when()
-						.get("/artists/{artistId}");
+						.put("/pet");
 
 			response.then().log().all();
+			assertTrue("Status Code is less than 500", response.statusCode() < 500);
 			System.out.println("Test passed.");
 		} catch (RuntimeException ex) {
 			System.err.println(ex.getMessage());
@@ -56,23 +58,18 @@ public class SimpleAPI {
 	}
 
 	@Test
-	public void test_aC4GtD0UAILC_getArtists() {
-		String testResultId = "test_aC4GtD0UAILC_getArtists";
+	public void test_G5p2NC3gBKTV_findPetsByStatus() {
+		String testResultId = "test_G5p2NC3gBKTV_findPetsByStatus";
 
 		try {
 			Response response = RestAssured
 					.given()
 						.log().all()
-						.queryParam("isAlive", "true")
-						.queryParam("nationality", "CeBCPLWRz")
-						.queryParam("ageUnder", "-2093465843")
-						.queryParam("ageOver", "-614581097")
-						.queryParam("name", "LJpPjODFxZ")
-						.queryParam("age", "-279041165")
 					.when()
-						.get("/artists");
+						.get("/pet/findByStatus");
 
 			response.then().log().all();
+			assertTrue("Status Code is less than 500", response.statusCode() < 500);
 			System.out.println("Test passed.");
 		} catch (RuntimeException ex) {
 			System.err.println(ex.getMessage());

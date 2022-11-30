@@ -7,7 +7,7 @@ import inputs.random.RandomBooleanGenerator;
 import inputs.random.RandomNumberGenerator;
 import inputs.random.RandomStringGenerator;
 import io.swagger.v3.oas.models.PathItem;
-import main.OpenApiSpecification;
+import specification.OpenApiSpecification;
 import testcases.TestCase;
 import util.DataType;
 
@@ -36,7 +36,7 @@ public class AbstractTestCaseGenerator {
              */
             String randomStringForTestCaseId = new RandomStringGenerator(12,12,true, true, false)
                     .nextValue();
-            String testId = "test_"+randomStringForTestCaseId+"_"+operation.getOperationId();
+            String testId = "test_" + randomStringForTestCaseId + "_" + operation.getOperationId();
             testCase.setId(testId);
 
             /**

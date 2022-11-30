@@ -4,10 +4,9 @@ import configuration.pojos.*;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
-import main.OpenApiSpecification;
+import specification.OpenApiSpecification;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -21,10 +20,14 @@ public class DefaultTestConfigurationGenerator {
     public TestConfigurationObject generate() {
         TestConfigurationObject testConfigurationObject = new TestConfigurationObject();
 
-        // generate Auth
+        /**
+         * Generate Auth
+         */
         generateAuth(testConfigurationObject);
 
-        // generate Test Configuration
+        /**
+         * Generate Test Configuration
+         */
         generateTestConfiguration(testConfigurationObject);
 
         return testConfigurationObject;
@@ -34,7 +37,10 @@ public class DefaultTestConfigurationGenerator {
         TestConfiguration testConfiguration = new TestConfiguration();
 
         testConfigurationObject.setTestConfiguration(testConfiguration);
-        // generate operations
+
+        /**
+         * Generate Operations
+         */
         generateOperations(testConfiguration);
     }
 
@@ -44,23 +50,37 @@ public class DefaultTestConfigurationGenerator {
         testConfiguration.setOperations(operations);
 
         for (Map.Entry<String, PathItem> path: openApiSpecification.getSpecification().getPaths().entrySet()) {
-            // GET
+
+            /**
+             * GET
+             */
             if (path.getValue().getGet() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
                 operation.setMethod("GET");
                 operation.setOperationId(path.getValue().getGet().getOperationId());
 
+                /**
+                 * Generate Parameters
+                 */
                 generateParameters(path.getValue().getGet().getParameters(), operation);
 //                operation.setTestParameters();
 //                operation.setExpectedResponse();
+
+                /**
+                 * Generate Request Body Parameter
+                 */
+                path.getValue().getGet().getRequestBody() EEEEEEE
+
 
                 operations.add(operation);
             }
 
             // operation.setOperationId(path.getValue().);
 
-            // TODO: POST
+            /**
+             * POST
+             */
             if (path.getValue().getPost() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
@@ -74,7 +94,9 @@ public class DefaultTestConfigurationGenerator {
                 operations.add(operation);
             }
 
-            // TODO: PUT
+            /**
+             * PUT
+             */
             if (path.getValue().getPut() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
@@ -88,7 +110,9 @@ public class DefaultTestConfigurationGenerator {
                 operations.add(operation);
             }
 
-            // TODO: PATCH
+            /**
+             * PATCH
+             */
             if (path.getValue().getPatch() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
@@ -102,7 +126,9 @@ public class DefaultTestConfigurationGenerator {
                 operations.add(operation);
             }
 
-            // TODO: OPTIONS
+            /**
+             * OPTIONS
+             */
             if (path.getValue().getOptions() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
@@ -116,7 +142,9 @@ public class DefaultTestConfigurationGenerator {
                 operations.add(operation);
             }
 
-            // TODO: HEAD
+            /**
+             * HEAD
+             */
             if (path.getValue().getHead() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
@@ -130,7 +158,9 @@ public class DefaultTestConfigurationGenerator {
                 operations.add(operation);
             }
 
-            // TODO: TRACE
+            /**
+             * TRACE
+             */
             if (path.getValue().getTrace() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
@@ -144,7 +174,9 @@ public class DefaultTestConfigurationGenerator {
                 operations.add(operation);
             }
 
-            // TODO: DELETE
+            /**
+             * DELETE
+             */
             if (path.getValue().getDelete() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
@@ -179,7 +211,7 @@ public class DefaultTestConfigurationGenerator {
 
 //                System.out.println("Enum###"+parameter.getSchema().getType()); array
 //                System.out.println("Enum###"+parameter.getSchema().toString()); details
-//                System.out.println("hehe###"+parameter.getSchema());
+                System.out.println("hehe###"+parameter.getSchema());
                 generateGenerators(testParameter, parameter.getSchema());
 
                 testParameters.add(testParameter);
@@ -196,6 +228,8 @@ public class DefaultTestConfigurationGenerator {
         generator.setValid(true);
 
 //        System.out.println(schema.getType());
+        System.out.println("dhuklammmmmmmmmmmmmmmmmmmmmmmmmm--------------------");
+        System.out.println(schema.getType());
 
         if (schema.getType().equals("boolean")) {
             generator.setType("RandomBooleanGenerator");
