@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="swagger-models-2.1.10">
+  <library name="BOTest">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/src/lib/swagger-models-2.1.10.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/lib/swagger-parser-v3-2.0.25.jar!/" />

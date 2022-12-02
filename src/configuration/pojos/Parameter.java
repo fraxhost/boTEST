@@ -2,7 +2,7 @@ package configuration.pojos;
 
 import java.util.List;
 
-public class TestParameter {
+public class Parameter {
     private String name;
     private String in;
     private double weight;

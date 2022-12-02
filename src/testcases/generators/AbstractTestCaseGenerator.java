@@ -2,7 +2,7 @@ package testcases.generators;
 
 import configuration.pojos.Operation;
 import configuration.pojos.TestConfigurationObject;
-import configuration.pojos.TestParameter;
+import configuration.pojos.Parameter;
 import inputs.random.RandomBooleanGenerator;
 import inputs.random.RandomNumberGenerator;
 import inputs.random.RandomStringGenerator;
@@ -31,32 +31,32 @@ public class AbstractTestCaseGenerator {
         for (Operation operation : testConfigurationObject.getTestConfiguration().getOperations()) {
             TestCase testCase = new TestCase();
 
-            /**
-             * Set Id
+            /*
+              Set Id
              */
             String randomStringForTestCaseId = new RandomStringGenerator(12,12,true, true, false)
                     .nextValue();
             String testId = "test_" + randomStringForTestCaseId + "_" + operation.getOperationId();
             testCase.setId(testId);
 
-            /**
-             * Set Faulty
-             * No faulty since mutation has not been implemented yet
+            /*
+              Set Faulty
+              No faulty since mutation has not been implemented yet
              */
             testCase.setFaulty(false);
 
-            /**
-             * Set Faulty Reason
+            /*
+              Set Faulty Reason
              */
             testCase.setFaultyReason("none");
 
-            /**
-             * Set Operation Id
+            /*
+              Set Operation Id
              */
             testCase.setOperationId(operation.getOperationId());
 
-            /**
-             * Set Method
+            /*
+              Set Method
              */
             switch (operation.getMethod()) {
                 case "DELETE":
@@ -83,166 +83,203 @@ public class AbstractTestCaseGenerator {
                 case "TRACE":
                     testCase.setMethod(PathItem.HttpMethod.TRACE);
                     break;
-                default:
-                    // nothing
             }
 
-            /**
-             * Set Path
+            /*
+              Set Path
              */
             testCase.setPath(operation.getTestPath());
 
-            /**
-             * Set Input Format
+            /*
+              Set Input Format
              */
             // testCase.setInputFormat(operation.);
             // operation.getRequestBody().getContent().keySet().stream().findFirst().get()
             // TODO: Make it dynamic (xml/json)
             testCase.setInputFormat("application/json");
 
-            /**
-             * Set Output Format
+            /*
+              Set Output Format
              */
             // testCase.setOutputFormat();
             // TODO: Make it dynamic (xml/json)
             testCase.setInputFormat("application/json");
 
-            /**
-             * Set Parameters
+            /*
+              Set Body Parameters
              */
+            for (Parameter bodyParameter: operation.getBodyParameters()) {
+                // TODO: Make an object and insert all body params into it
+                //System.err.println(bodyParameter);
 
-            for (TestParameter testParameter :operation.getTestParameters()) {
-                // System.out.println(testParameter.getGenerators().get(0).getGenParameters());
+                generateParameterForAbstractTestCase(testCase, bodyParameter);
+            }
 
-                String generatorType = testParameter.getGenerators().get(0).getType();
-                String parameterType = testParameter.getIn();
-
-                String randomString = null;
-                String randomBoolean = null;
-                String randomNumber = null;
-
-//                System.out.println(testParameter);
-
+            /*
+              Set Test Parameters
+             */
+            for (Parameter testParameter :operation.getTestParameters()) {
                 // TODO: Remove later
-                if (generatorType==null) continue;
+                String generatorType = testParameter.getGenerators().get(0).getType();
+                if (generatorType == null) continue;
 
-                if (generatorType.equals("RandomBooleanGenerator")) {
-                    // TODO: use gen parameters to customize random boolean
-                    randomBoolean = new RandomBooleanGenerator().nextValueAsString();
-                } else if (generatorType.equals("RandomNumberGenerator")) {
-                    // TODO: use gen parameters to customize random number
-                    randomNumber = new RandomNumberGenerator(DataType.INTEGER).nextValueAsString();
-                } else if (generatorType.equals("RandomStringGenerator")) {
-                    // TODO: use gen parameters to customize random number
-                    randomString = new RandomStringGenerator().nextValueAsString();
-                }
-
-                /**
-                 * Set Query Parameters
-                 */
-                if (parameterType.equals("query")) {
-                    Map<String, String> queryParameter;
-
-                    if (testCase.getQueryParameters() != null) {
-                        queryParameter = testCase.getQueryParameters();
-                    } else {
-                        queryParameter = new HashMap<>();
-                    }
-
-
-                    if (randomNumber != null) {
-                        queryParameter.put(testParameter.getName(), randomNumber);
-                    } else if (randomBoolean != null) {
-                        queryParameter.put(testParameter.getName(), randomBoolean);
-                    } else if (randomString != null) {
-                        queryParameter.put(testParameter.getName(), randomString);
-                    }
-
-                    testCase.setQueryParameters(queryParameter);
-
-                }
-                /**
-                 * Set Path Parameters
-                 */
-                else if (parameterType.equals("path")) {
-                    Map<String, String> pathParameter;
-
-                    if (testCase.getPathParameters() != null) {
-                        pathParameter = testCase.getPathParameters();
-                    } else {
-                        pathParameter = new HashMap<>();
-                    }
-
-                    if (randomNumber != null) {
-                        pathParameter.put(testParameter.getName(), randomNumber);
-                    } else if (randomBoolean != null) {
-                        pathParameter.put(testParameter.getName(), randomBoolean);
-                    } else if (randomString != null) {
-                        pathParameter.put(testParameter.getName(), randomString);
-                    }
-
-                    testCase.setPathParameters(pathParameter);
-
-                }
-                /**
-                 * Set Header Parameters
-                 */
-                else if (parameterType.equals("header")) {
-                    Map<String, String> headerParameter;
-
-                    if (testCase.getHeaderParameters() != null) {
-                        headerParameter = testCase.getHeaderParameters();
-                    } else {
-                        headerParameter = new HashMap<>();
-                    }
-
-
-                    if (randomNumber != null) {
-                        headerParameter.put(testParameter.getName(), randomNumber);
-                    } else if (randomBoolean != null) {
-                        headerParameter.put(testParameter.getName(), randomBoolean);
-                    } else if (randomString != null) {
-                        headerParameter.put(testParameter.getName(), randomString);
-                    }
-
-                    testCase.setPathParameters(headerParameter);
-
-                }
-                /**
-                 * Set Form Parameters
-                 */
-                else if (parameterType.equals("form")) {
-                    Map<String, String> formParameter;
-
-                    if (testCase.getFormParameters() != null) {
-                        formParameter = testCase.getFormParameters();
-                    } else {
-                        formParameter = new HashMap<>();
-                    }
-
-                    if (randomNumber != null) {
-                        formParameter.put(testParameter.getName(), randomNumber);
-                    } else if (randomBoolean != null) {
-                        formParameter.put(testParameter.getName(), randomBoolean);
-                    } else if (randomString != null) {
-                        formParameter.put(testParameter.getName(), randomString);
-                    }
-
-                    testCase.setFormParameters(formParameter);
-
-                }
-                /**
-                 * Set Body Parameters
-                 */
-                else if (parameterType.equals("body")) {
-                    // TODO: Work In Progress
-                    testCase.setBodyParameter("null");
-                }
+                generateParameterForAbstractTestCase(testCase, testParameter);
             }
 
             testCases.add(testCase);
         }
 
         return testCases;
+    }
+
+    private void generateParameterForAbstractTestCase (TestCase testCase, Parameter parameter) {
+        String generatorType = parameter.getGenerators().get(0).getType();
+        String parameterType = parameter.getIn();
+
+        String randomString = null;
+        String randomBoolean = null;
+        String randomNumber = null;
+
+        switch (generatorType) {
+            case "RandomBooleanGenerator":
+                // TODO: use gen parameters to customize random boolean
+                randomBoolean = new RandomBooleanGenerator().nextValueAsString();
+                break;
+            case "RandomNumberGenerator":
+                // TODO: use gen parameters to customize random number
+                randomNumber = new RandomNumberGenerator(DataType.INTEGER).nextValueAsString();
+                break;
+            case "RandomStringGenerator":
+                // TODO: use gen parameters to customize random number
+                randomString = new RandomStringGenerator().nextValueAsString();
+                break;
+        }
+
+        String parameterName = parameter.getName();
+        if (randomNumber != null) {
+            parameterName = parameterName + ":number";
+        } else if (randomBoolean != null) {
+            parameterName = parameterName + ":boolean";
+        } else if (randomString != null) {
+            parameterName = parameterName + ":string";
+        }
+
+        switch (parameterType) {
+            /*
+              Set Query Parameters
+             */
+            case "query":
+                Map<String, String> queryParameter;
+
+                if (testCase.getQueryParameters() != null) {
+                    queryParameter = testCase.getQueryParameters();
+                } else {
+                    queryParameter = new HashMap<>();
+                }
+
+                if (randomNumber != null) {
+                    queryParameter.put(parameterName, randomNumber);
+                } else if (randomBoolean != null) {
+                    queryParameter.put(parameterName, randomBoolean);
+                } else if (randomString != null) {
+                    queryParameter.put(parameterName, randomString);
+                }
+
+                testCase.setQueryParameters(queryParameter);
+
+                break;
+            /*
+             * Set Path Parameters
+             */
+            case "path":
+                Map<String, String> pathParameter;
+
+                if (testCase.getPathParameters() != null) {
+                    pathParameter = testCase.getPathParameters();
+                } else {
+                    pathParameter = new HashMap<>();
+                }
+
+                if (randomNumber != null) {
+                    pathParameter.put(parameterName, randomNumber);
+                } else if (randomBoolean != null) {
+                    pathParameter.put(parameterName, randomBoolean);
+                } else if (randomString != null) {
+                    pathParameter.put(parameterName, randomString);
+                }
+
+                testCase.setPathParameters(pathParameter);
+
+                break;
+            /*
+             * Set Header Parameters
+             */
+            case "header":
+                Map<String, String> headerParameter;
+
+                if (testCase.getHeaderParameters() != null) {
+                    headerParameter = testCase.getHeaderParameters();
+                } else {
+                    headerParameter = new HashMap<>();
+                }
+
+                if (randomNumber != null) {
+                    headerParameter.put(parameterName, randomNumber);
+                } else if (randomBoolean != null) {
+                    headerParameter.put(parameterName, randomBoolean);
+                } else if (randomString != null) {
+                    headerParameter.put(parameterName, randomString);
+                }
+
+                testCase.setPathParameters(headerParameter);
+
+                break;
+            /*
+             * Set Form Parameters
+             */
+            case "form":
+                Map<String, String> formParameter;
+
+                if (testCase.getFormParameters() != null) {
+                    formParameter = testCase.getFormParameters();
+                } else {
+                    formParameter = new HashMap<>();
+                }
+
+                if (randomNumber != null) {
+                    formParameter.put(parameterName, randomNumber);
+                } else if (randomBoolean != null) {
+                    formParameter.put(parameterName, randomBoolean);
+                } else if (randomString != null) {
+                    formParameter.put(parameterName, randomString);
+                }
+
+                testCase.setFormParameters(formParameter);
+
+                break;
+            /*
+             * Set Body Parameters
+             */
+            case "body":
+                Map<String, String> bodyParameter;
+
+                if (testCase.getBodyParameter() != null) {
+                    bodyParameter = testCase.getBodyParameter();
+                } else {
+                    bodyParameter = new HashMap<>();
+                }
+
+                if (randomNumber != null) {
+                    bodyParameter.put(parameterName, randomNumber);
+                } else if (randomBoolean != null) {
+                    bodyParameter.put(parameterName, randomBoolean);
+                } else if (randomString != null) {
+                    bodyParameter.put(parameterName, randomString);
+                }
+
+                testCase.setBodyParameter(bodyParameter);
+
+                break;
+        }
     }
 }

@@ -4,7 +4,7 @@ info:
   title: "WebAPI_BOTest"
   version: "1.0"
 servers:
-- url: "http://localhost:5166"
+- url: "https://localhost:7166"
 paths:
   /api/Category:
     get:
@@ -30,6 +30,23 @@ paths:
                 items:
                   $ref: "#/components/schemas/Pet"
     post:
+      tags:
+      - "Category"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        "200":
+          description: "Success"
+    put:
       tags:
       - "Category"
       requestBody:
@@ -117,6 +134,87 @@ paths:
             text/json:
               schema:
                 $ref: "#/components/schemas/Pet"
+  /api/PhotoUrl:
+    get:
+      tags:
+      - "PhotoUrl"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            text/plain:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/PhotoUrl"
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/PhotoUrl"
+            text/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/PhotoUrl"
+    post:
+      tags:
+      - "PhotoUrl"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhotoUrl"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/PhotoUrl"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/PhotoUrl"
+      responses:
+        "200":
+          description: "Success"
+    put:
+      tags:
+      - "PhotoUrl"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhotoUrl"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/PhotoUrl"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/PhotoUrl"
+      responses:
+        "200":
+          description: "Success"
+  /api/PhotoUrl/{id}:
+    get:
+      tags:
+      - "PhotoUrl"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+          format: "int32"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/PhotoUrl"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhotoUrl"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/PhotoUrl"
 components:
   schemas:
     Category:

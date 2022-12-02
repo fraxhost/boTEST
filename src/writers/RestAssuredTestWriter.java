@@ -1,5 +1,6 @@
 package writers;
 
+import io.restassured.http.ContentType;
 import specification.OpenApiSpecification;
 import testcases.TestCase;
 
@@ -28,6 +29,7 @@ public class RestAssuredTestWriter {
         // TODO: change it/
         testClass.append("package generation;").append("\n");
         testClass.append("import io.restassured.response.Response;").append("\n");
+        testClass.append("import io.restassured.http.ContentType;").append("\n");
         testClass.append("import io.restassured.RestAssured;").append("\n");
         testClass.append("import org.junit.Assert;").append("\n");
         testClass.append("import org.junit.Before;").append("\n\n");
@@ -56,32 +58,43 @@ public class RestAssuredTestWriter {
 
             if (testCase.getFormParameters() != null) {
                 testCase.getFormParameters().forEach((key, value) -> {
-                    testClass.append("\t\t\t\t\t\t").append(".formParam(").append("\"").append(key).append("\", ")
+                    String modifiedKey = key.substring(0, key.indexOf(':'));
+
+                    testClass.append("\t\t\t\t\t\t").append(".formParam(").append("\"").append(modifiedKey).append("\", ")
                             .append("\"").append(value).append("\")").append("\n");
                 });
             }
             if (testCase.getHeaderParameters() != null) {
                 testCase.getHeaderParameters().forEach((key, value) -> {
-                    testClass.append("\t\t\t\t\t\t").append(".header(").append("\"").append(key).append("\", ")
+                    String modifiedKey = key.substring(0, key.indexOf(':'));
+
+                    testClass.append("\t\t\t\t\t\t").append(".header(").append("\"").append(modifiedKey).append("\", ")
                             .append("\"").append(value).append("\")").append("\n");
                 });
             }
             if (testCase.getQueryParameters() != null) {
                 testCase.getQueryParameters().forEach((key, value) -> {
-                    testClass.append("\t\t\t\t\t\t").append(".queryParam(").append("\"").append(key).append("\", ")
+                    String modifiedKey = key.substring(0, key.indexOf(':'));
+
+                    testClass.append("\t\t\t\t\t\t").append(".queryParam(").append("\"").append(modifiedKey).append("\", ")
                             .append("\"").append(value).append("\")").append("\n");
                 });
             }
             if (testCase.getPathParameters() != null) {
                 testCase.getPathParameters().forEach((key, value) -> {
-                    testClass.append("\t\t\t\t\t\t").append(".pathParam(").append("\"").append(key).append("\", ")
+                    String modifiedKey = key.substring(0, key.indexOf(':'));
+
+                    testClass.append("\t\t\t\t\t\t").append(".pathParam(").append("\"").append(modifiedKey).append("\", ")
                             .append("\"").append(value).append("\")").append("\n");
                 });
             }
 
             if (testCase.getBodyParameter() != null) {
-                testClass.append("\t\t\t\t\t\t").append(".body(").append("\"").append(testCase.getBodyParameter())
-                        .append("\", ").append("\n");
+                //.contentType(ContentType.JSON)
+                testClass.append("\t\t\t\t\t\t").append(".contentType(").append("ContentType.JSON").append(")").append("\n");
+                //testClass.append("\t\t\t\t\t\t").append(".contentType(")
+                testClass.append("\t\t\t\t\t\t").append(".body(").append("\"").append(testCase.getBodyParameterAsJson())
+                        .append("\")").append("\n");
             }
 
             testClass.append("\t\t\t\t\t").append(".when()").append("\n");
