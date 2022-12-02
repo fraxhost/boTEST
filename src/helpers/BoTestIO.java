@@ -11,9 +11,13 @@ public class BoTestIO {
             FileWriter myWriter = new FileWriter(pathname);
             myWriter.write(content);
             myWriter.close();
-            System.out.println("Successfully wrote to the file.");
+            System.out.println("##########");
+            System.out.println("Successfully wrote to the file " + pathname + "...");
+            System.out.println("##########");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("##########");
+            System.out.println("An error occurred while writing to the file " + pathname + "...");
+            System.out.println("##########");
             e.printStackTrace();
         }
     }

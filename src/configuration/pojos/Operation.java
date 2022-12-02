@@ -6,7 +6,8 @@ public class Operation {
     private String testPath;
     private String operationId;
     private String method;
-    private List<TestParameter> testParameters = null;
+    private List<Parameter> testParameters = null;
+    private List<Parameter> bodyParameters = null;
     private String expectedResponse;
 
     public String getTestPath() {
@@ -33,12 +34,20 @@ public class Operation {
         this.method = method;
     }
 
-    public List<TestParameter> getTestParameters() {
+    public List<Parameter> getTestParameters() {
         return testParameters;
     }
 
-    public void setTestParameters(List testParameters) {
+    public void setTestParameters(List<Parameter> testParameters) {
         this.testParameters = testParameters;
+    }
+
+    public List<Parameter> getBodyParameters() {
+        return bodyParameters;
+    }
+
+    public void setBodyParameters(List<Parameter> bodyParameters) {
+        this.bodyParameters = bodyParameters;
     }
 
     public String getExpectedResponse() {

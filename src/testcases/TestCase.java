@@ -30,7 +30,7 @@ public class TestCase {
     // form-data parameters
     private Map<String, String> formParameters;
     // body parameter
-    private String bodyParameter;
+    private Map<String, String> bodyParameter;
 
     public String getId() {
         return id;
@@ -128,11 +128,37 @@ public class TestCase {
         this.formParameters = formParameters;
     }
 
-    public String getBodyParameter() {
+    public Map<String, String> getBodyParameter() {
         return bodyParameter;
     }
 
-    public void setBodyParameter(String bodyParameter) {
+    public String getBodyParameterAsJson() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("{");
+        bodyParameter.forEach((key, value) -> {
+            String name = key.substring(0, key.indexOf(':'));
+            String type = key.substring(key.indexOf(':')+1, key.length());
+
+            if (type.equals("string")) {
+                sb.append("\\\"").append(name).append("\\\"").append(": ").append("\\\"").append(value).append("\\\"");
+            } else {
+                sb.append("\\\"").append(name).append("\\\"").append(": ").append(value);
+            }
+
+            sb.append(",");
+        });
+        sb.setLength(sb.length() - 1); // removing the last unnecessary ,
+        sb.append("}");
+
+        return sb.toString();
+    }
+
+//    public Map<String, String> getBodyParameterAsSingleObject() {
+//        return bodyParameter;
+//    }
+
+    public void setBodyParameter(Map<String, String> bodyParameter) {
         this.bodyParameter = bodyParameter;
     }
 

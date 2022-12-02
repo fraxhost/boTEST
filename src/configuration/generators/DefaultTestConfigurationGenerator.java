@@ -3,16 +3,14 @@ package configuration.generators;
 import configuration.pojos.*;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.media.Schema;
-import io.swagger.v3.oas.models.parameters.Parameter;
-import main.OpenApiSpecification;
+import specification.OpenApiSpecification;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class DefaultTestConfigurationGenerator {
-    private OpenApiSpecification openApiSpecification;
+    private final OpenApiSpecification openApiSpecification;
 
     public DefaultTestConfigurationGenerator(OpenApiSpecification openApiSpecification) {
         this.openApiSpecification = openApiSpecification;
@@ -21,10 +19,14 @@ public class DefaultTestConfigurationGenerator {
     public TestConfigurationObject generate() {
         TestConfigurationObject testConfigurationObject = new TestConfigurationObject();
 
-        // generate Auth
+        /*
+         * Generate Auth
+         */
         generateAuth(testConfigurationObject);
 
-        // generate Test Configuration
+        /*
+         * Generate Test Configuration
+         */
         generateTestConfiguration(testConfigurationObject);
 
         return testConfigurationObject;
@@ -34,7 +36,10 @@ public class DefaultTestConfigurationGenerator {
         TestConfiguration testConfiguration = new TestConfiguration();
 
         testConfigurationObject.setTestConfiguration(testConfiguration);
-        // generate operations
+
+        /*
+         * Generate Operations
+         */
         generateOperations(testConfiguration);
     }
 
@@ -44,14 +49,20 @@ public class DefaultTestConfigurationGenerator {
         testConfiguration.setOperations(operations);
 
         for (Map.Entry<String, PathItem> path: openApiSpecification.getSpecification().getPaths().entrySet()) {
-            // GET
+
+            /*
+             * GET
+             */
             if (path.getValue().getGet() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
                 operation.setMethod("GET");
                 operation.setOperationId(path.getValue().getGet().getOperationId());
 
-                generateParameters(path.getValue().getGet().getParameters(), operation);
+                /*
+                 * Generate Parameters
+                 */
+                generateParameters(path.getValue().getGet().getParameters(), null, operation);
 //                operation.setTestParameters();
 //                operation.setExpectedResponse();
 
@@ -60,98 +71,168 @@ public class DefaultTestConfigurationGenerator {
 
             // operation.setOperationId(path.getValue().);
 
-            // TODO: POST
+            /*
+             * POST
+             */
             if (path.getValue().getPost() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
                 operation.setMethod("POST");
                 operation.setOperationId(path.getValue().getPost().getOperationId());
 
-                generateParameters(path.getValue().getPost().getParameters(), operation);
+                /*
+                 * Setting up request body parameter
+                 */
+                var requestBodySchemaString = "";
+                try {
+                    requestBodySchemaString = path.getValue().getPost().getRequestBody().getContent()
+                                                .get("application/json").getSchema().get$ref();
+                } catch (Exception e) {
+                    System.out.println("No request body ...");
+                }
+
+                /*
+                 * Generate Parameters
+                 */
+                generateParameters(path.getValue().getPost().getParameters(), requestBodySchemaString, operation);
 //                operation.setTestParameters();
 //                operation.setExpectedResponse();
+//                generateRequestBody();
 
                 operations.add(operation);
             }
 
-            // TODO: PUT
+            /*
+             * PUT
+             */
             if (path.getValue().getPut() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
                 operation.setMethod("PUT");
                 operation.setOperationId(path.getValue().getPut().getOperationId());
 
-                generateParameters(path.getValue().getPut().getParameters(), operation);
+                /*
+                 * Setting up request body parameter
+                 */
+                var requestBodySchemaString = "";
+                try {
+                    requestBodySchemaString = path.getValue().getPut().getRequestBody().getContent()
+                            .get("application/json").getSchema().get$ref();
+                } catch (Exception e) {
+                    System.out.println("No request body ...");
+                }
+
+                /*
+                 * Generate Parameters
+                 */
+                generateParameters(path.getValue().getPut().getParameters(), requestBodySchemaString, operation);
 //                operation.setTestParameters();
 //                operation.setExpectedResponse();
 
                 operations.add(operation);
             }
 
-            // TODO: PATCH
+            /*
+             * PATCH
+             */
             if (path.getValue().getPatch() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
                 operation.setMethod("PATCH");
                 operation.setOperationId(path.getValue().getPatch().getOperationId());
 
-                generateParameters(path.getValue().getPatch().getParameters(), operation);
+                /*
+                 * Setting up request body parameter
+                 */
+                var requestBodySchemaString = "";
+                try {
+                    requestBodySchemaString = path.getValue().getPatch().getRequestBody().getContent()
+                            .get("application/json").getSchema().get$ref();
+                } catch (Exception e) {
+                    System.out.println("No request body ...");
+                }
+
+                /*
+                 * Generate Parameters
+                 */
+                generateParameters(path.getValue().getPatch().getParameters(), requestBodySchemaString, operation);
+
 //                operation.setTestParameters();
 //                operation.setExpectedResponse();
 
                 operations.add(operation);
             }
 
-            // TODO: OPTIONS
+            /**
+             * OPTIONS
+             */
             if (path.getValue().getOptions() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
                 operation.setMethod("OPTIONS");
                 operation.setOperationId(path.getValue().getOptions().getOperationId());
 
-                generateParameters(path.getValue().getOptions().getParameters(), operation);
+                /*
+                 * Generate Parameters
+                 */
+                generateParameters(path.getValue().getOptions().getParameters(), null, operation);
 //                operation.setTestParameters();
 //                operation.setExpectedResponse();
 
                 operations.add(operation);
             }
 
-            // TODO: HEAD
+            /**
+             * HEAD
+             */
             if (path.getValue().getHead() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
                 operation.setMethod("HEAD");
                 operation.setOperationId(path.getValue().getHead().getOperationId());
 
-                generateParameters(path.getValue().getHead().getParameters(), operation);
+                /*
+                 * Generate Parameters
+                 */
+                generateParameters(path.getValue().getHead().getParameters(), null, operation);
 //                operation.setTestParameters();
 //                operation.setExpectedResponse();
 
                 operations.add(operation);
             }
 
-            // TODO: TRACE
+            /**
+             * TRACE
+             */
             if (path.getValue().getTrace() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
                 operation.setMethod("TRACE");
                 operation.setOperationId(path.getValue().getTrace().getOperationId());
 
-                generateParameters(path.getValue().getTrace().getParameters(), operation);
+                /*
+                 * Generate Parameters
+                 */
+                generateParameters(path.getValue().getTrace().getParameters(), null, operation);
 //                operation.setTestParameters();
 //                operation.setExpectedResponse();
 
                 operations.add(operation);
             }
 
-            // TODO: DELETE
+            /**
+             * DELETE
+             */
             if (path.getValue().getDelete() != null) {
                 Operation operation = new Operation();
                 operation.setTestPath(path.getKey());
                 operation.setMethod("DELETE");
                 operation.setOperationId(path.getValue().getDelete().getOperationId());
 
-                generateParameters(path.getValue().getDelete().getParameters(), operation);
+                /*
+                 * Generate Parameters
+                 */
+                generateParameters(path.getValue().getDelete().getParameters(), null, operation);
 //                operation.setTestParameters();
 //                operation.setExpectedResponse();
 
@@ -160,48 +241,108 @@ public class DefaultTestConfigurationGenerator {
         }
     }
 
-    private void generateParameters(List<Parameter> parameters, Operation operation) {
-        List<TestParameter> testParameters = new ArrayList<>();
+    private void generateParameters(List<io.swagger.v3.oas.models.parameters.Parameter> parameters, String requestBodySchema, Operation operation) {
+        List<Parameter> testParameters = new ArrayList<>();
+        List<Parameter> bodyParameters = new ArrayList<>();
 
-        for (Parameter parameter: parameters) {
-            TestParameter testParameter = new TestParameter();
+        /*
+         * Path Parameter, Query Parameter
+         */
+        if (parameters != null) {
+            for (io.swagger.v3.oas.models.parameters.Parameter parameter: parameters) {
+                Parameter testParameter = new Parameter();
 
-            testParameter.setName(parameter.getName());
-            testParameter.setIn(parameter.getIn());
-            testParameter.setWeight(0.5); // parameter is optional
+                testParameter.setName(parameter.getName());
+                testParameter.setIn(parameter.getIn());
+                testParameter.setWeight(0.5); // parameter is optional
 
-            if (parameter.getRequired() != null) {
-                if (parameter.getRequired()) {
-                    testParameter.setWeight(1); // parameter is required
+                if (parameter.getRequired() != null) {
+                    if (parameter.getRequired()) {
+                        testParameter.setWeight(1); // parameter is required
+                    }
                 }
+
+                generateGenerators(testParameter, parameter.getSchema());
+
+                testParameters.add(testParameter);
             }
+        }
 
-            generateGenerators(testParameter, parameter.getSchema());
+        /*
+         * Request Body Parameter
+         */
+        if (requestBodySchema != null) {
 
-            testParameters.add(testParameter);
+
+            Schema requestBodyParameterSchema = determineSchemaFromString(requestBodySchema);
+            Map<String, Schema> properties = requestBodyParameterSchema.getProperties();
+
+
+            for (Map.Entry<String, Schema> property: properties.entrySet()) {
+                Parameter bodyParameter = new Parameter();
+
+                bodyParameter.setName(property.getKey());
+                bodyParameter.setIn("body");
+                bodyParameter.setWeight(1); // parameter is required
+
+                /*
+                 * Generate Parameter Generators
+                 */
+                generateGenerators(bodyParameter, property.getValue());
+
+                bodyParameters.add(bodyParameter);
+            }
         }
 
         operation.setTestParameters(testParameters);
+        operation.setBodyParameters(bodyParameters);
     }
 
-    private void generateGenerators(TestParameter testParameter, Schema schema) {
+    private Schema determineSchemaFromString(String requestBodySchema) {
+        StringBuilder StringOfSchema = new StringBuilder();
+        for (int i=requestBodySchema.length()-1; i>=0; i--) {
+            if (requestBodySchema.charAt(i) == '/') break;
+            StringOfSchema.insert(0, requestBodySchema.charAt(i));
+        }
+
+        return openApiSpecification.getSpecification().getComponents().getSchemas().get(StringOfSchema.toString());
+    }
+
+    private void generateGenerators(Parameter testParameter, Schema schema) {
+        // List of generators because we may want to use an invalid generator with a valid generator
+        // to create valid and invalid test cases
         List<Generator> generators = new ArrayList<>();
 
         Generator generator = new Generator();
         generator.setValid(true);
 
+        System.out.println("dhuklammmmmmmmmmmmmmmmmmmmmmmmmm--------------------");
+        System.out.println(schema.getType());
+
+        /*
+          Boolean Generator
+         */
         if (schema.getType().equals("boolean")) {
             generator.setType("RandomBooleanGenerator");
-        } else if (schema.getType().equals("integer")) {
+        }
+        /*
+          Number Generator
+         */
+        else if (schema.getType().equals("integer")) {
             generator.setType("RandomNumberGenerator");
-        } else if (schema.getType().equals("string")) {
+        }
+        /*
+          String Generator
+         */
+        else if (schema.getType().equals("string")) {
             generator.setType("RandomStringGenerator");
         }
 
+        /*
+         * Generate Parameter Generator Constraints
+         */
         generateGenParameters(generator, schema);
-
         generators.add(generator);
-
         testParameter.setGenerators(generators);
     }
 
@@ -213,8 +354,8 @@ public class DefaultTestConfigurationGenerator {
         }
         else if (schema.getType().equals("string")) {
 
-            /**
-             * Min Length Parameter Values
+            /*
+              Min Length Parameter Values
              */
             GenParameter genParameterMinLength = new GenParameter();
 
@@ -228,8 +369,8 @@ public class DefaultTestConfigurationGenerator {
 
             genParameters.add(genParameterMinLength);
 
-            /**
-             * Max Length Parameter Values
+            /*
+              Max Length Parameter Values
              */
             GenParameter genParameterMaxLength = new GenParameter();
 
@@ -250,11 +391,9 @@ public class DefaultTestConfigurationGenerator {
             generator.setGenParameters(genParameters);
         }
         else if (schema.getType().equals("integer")) {
-
-            /**
-             * Data Type Values
+            /*
+              Data Type Values
              */
-
             GenParameter genParameterType = new GenParameter();
 
             genParameterType.setName("type");
@@ -269,11 +408,9 @@ public class DefaultTestConfigurationGenerator {
 
             genParameters.add(genParameterType);
 
-
-            /**
+            /*
              * Min Parameter Values
              */
-
             GenParameter genParameterMinNumber = new GenParameter();
 
             genParameterMinNumber.setName("min");
@@ -287,10 +424,9 @@ public class DefaultTestConfigurationGenerator {
             genParameters.add(genParameterMinNumber);
 
 
-            /**
+            /*
              * Max Parameter Values
              */
-
             GenParameter genParameterMaxNumber = new GenParameter();
 
             genParameterMaxNumber.setName("max");
@@ -302,6 +438,23 @@ public class DefaultTestConfigurationGenerator {
             }
 
             genParameters.add(genParameterMaxNumber);
+        }
+        // TODO: Complete it
+        else if (schema.getType().equals("object")) {
+            System.out.println("ami object generate parameters ae achi.............................");
+
+            GenParameter schemaType = new GenParameter();
+
+            System.out.println(schema.getType());
+            System.out.println(schema.getProperties());
+
+            if (schema.get$ref() != null) {
+                System.out.println("hoi hoi hoi ............");
+                System.out.println(determineSchemaFromString(schema.get$ref()));
+                schemaType.setName(determineSchemaFromString(schema.get$ref()).toString());
+            }
+
+            genParameters.add(schemaType);
         }
 
         generator.setGenParameters(genParameters);
