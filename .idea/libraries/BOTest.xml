@@ -74,6 +74,8 @@
       <root url="jar://$PROJECT_DIR$/src/lib/httpcore-4.4.6.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/swagger-models-2.1.10-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

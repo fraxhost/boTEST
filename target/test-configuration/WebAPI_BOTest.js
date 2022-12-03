@@ -51,6 +51,12 @@ TestConfiguration{
 			testParameters=[], 
 			expectedResponse='null'
 		}, Operation{
+			testPath='/api/Pet', 
+			operationId='null', 
+			method='POST', 
+			testParameters=[], 
+			expectedResponse='null'
+		}, Operation{
 			testPath='/api/Pet/{id}', 
 			operationId='null', 
 			method='GET', 

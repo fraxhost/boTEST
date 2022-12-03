@@ -3,18 +3,18 @@ package configuration.pojos;
 import java.util.List;
 
 public class TestConfiguration {
-    private List<Operation> operations = null;
-    public List<Operation> getOperations() {
-        return operations;
+    private List<TestOperation> testOperations = null;
+    public List<TestOperation> getOperations() {
+        return testOperations;
     }
-    public void setOperations(List<Operation> operations) {
-        this.operations = operations;
+    public void setOperations(List<TestOperation> testOperations) {
+        this.testOperations = testOperations;
     }
 
     @Override
     public String toString() {
         return "TestConfiguration{\n" +
-                "\t\toperations=" + operations +
+                "\t\toperations=" + testOperations +
                 "\n\t}";
     }
 }

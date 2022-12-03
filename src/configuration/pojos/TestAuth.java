@@ -2,7 +2,7 @@ package configuration.pojos;
 
 import java.util.Map;
 
-public class Auth {
+public class TestAuth {
     private Boolean required;
     private Map<String, String> queryParameters = null;
     private Map<String, String> headerParameters = null;

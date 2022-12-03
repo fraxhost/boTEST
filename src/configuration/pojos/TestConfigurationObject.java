@@ -1,15 +1,15 @@
 package configuration.pojos;
 
 public class TestConfigurationObject {
-    private Auth auth;
+    private TestAuth testAuth;
     private TestConfiguration testConfiguration;
 
-    public Auth getAuth() {
-        return auth;
+    public TestAuth getAuth() {
+        return testAuth;
     }
 
-    public void setAuth(Auth auth) {
-        this.auth = auth;
+    public void setAuth(TestAuth testAuth) {
+        this.testAuth = testAuth;
     }
 
     public TestConfiguration getTestConfiguration() {
@@ -23,7 +23,7 @@ public class TestConfigurationObject {
     @Override
     public String toString() {
         return "TestConfigurationObject{" + "\n\t" +
-                "auth=" + auth + ",\n\t" +
+                "auth=" + testAuth + ",\n\t" +
                 "testConfiguration=" + testConfiguration + "\n" +
                 '}';
     }

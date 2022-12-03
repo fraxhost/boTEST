@@ -6,7 +6,7 @@ public class TestParameter {
     private String name;
     private String in;
     private double weight;
-    private Generator generator;
+    private TestGenerator testGenerator;
     private List<TestParameter> parameters;
 
     public List<TestParameter> getParameters() { return parameters;}
@@ -36,12 +36,12 @@ public class TestParameter {
         this.weight = weight;
     }
 
-    public Generator getGenerator() {
-        return generator;
+    public TestGenerator getGenerator() {
+        return testGenerator;
     }
 
-    public void setGenerator(Generator generator) {
-        this.generator = generator;
+    public void setGenerator(TestGenerator testGenerator) {
+        this.testGenerator = testGenerator;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class TestParameter {
                 " \t\t\t\tname='" + name + '\'' +
                 ", \n\t\t\t\tin='" + in + '\'' +
                 ", \n\t\t\t\tweight=" + weight +
-                ", \n\t\t\t\ttestcases.generators=" + generator +
+                ", \n\t\t\t\ttestcases.generators=" + testGenerator +
                 "\n\t\t\t}";
     }
 }

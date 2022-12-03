@@ -2,11 +2,11 @@ package configuration.pojos;
 
 import java.util.List;
 
-public class Operation {
+public class TestOperation {
     private String testPath;
     private String operationId;
     private String method;
-    private List<TestParameter> testParameters = null;
+    private List<TestParameter> generalParameters = null;
     private TestParameter bodyParameter = null;
     private String expectedResponse;
 
@@ -34,12 +34,12 @@ public class Operation {
         this.method = method;
     }
 
-    public List<TestParameter> getTestParameters() {
-        return testParameters;
+    public List<TestParameter> getGeneralParameters() {
+        return generalParameters;
     }
 
-    public void setTestParameters(List<TestParameter> testParameters) {
-        this.testParameters = testParameters;
+    public void setGeneralParameters(List<TestParameter> generalParameters) {
+        this.generalParameters = generalParameters;
     }
 
     public TestParameter getBodyParameter() {
@@ -64,7 +64,7 @@ public class Operation {
                 "\t\t\ttestPath='" + testPath + '\'' +
                 ", \n\t\t\toperationId='" + operationId + '\'' +
                 ", \n\t\t\tmethod='" + method + '\'' +
-                ", \n\t\t\ttestParameters=" + testParameters +
+                ", \n\t\t\ttestParameters=" + generalParameters +
                 ", \n\t\t\texpectedResponse='" + expectedResponse + '\'' +
                 "\n\t\t}";
     }

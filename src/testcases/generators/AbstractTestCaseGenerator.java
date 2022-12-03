@@ -1,6 +1,6 @@
 package testcases.generators;
 
-import configuration.pojos.Operation;
+import configuration.pojos.TestOperation;
 import configuration.pojos.TestConfigurationObject;
 import configuration.pojos.TestParameter;
 import inputs.random.RandomBooleanGenerator;
@@ -28,14 +28,14 @@ public class AbstractTestCaseGenerator {
     public List<TestCase> generateTestCases() {
         List<TestCase> testCases = new ArrayList<>();
 
-        for (Operation operation : testConfigurationObject.getTestConfiguration().getOperations()) {
+        for (TestOperation testOperation : testConfigurationObject.getTestConfiguration().getOperations()) {
             TestCase testCase = new TestCase();
             /*
               Set Id
              */
             String randomStringForTestCaseId = new RandomStringGenerator(12,12,true, true, false)
                     .nextValue();
-            String testId = "test_" + randomStringForTestCaseId + "_" + operation.getOperationId();
+            String testId = "test_" + randomStringForTestCaseId + "_" + testOperation.getOperationId();
             testCase.setId(testId);
 
             /*
@@ -52,12 +52,12 @@ public class AbstractTestCaseGenerator {
             /*
               Set Operation Id
              */
-            testCase.setOperationId(operation.getOperationId());
+            testCase.setOperationId(testOperation.getOperationId());
 
             /*
               Set Method
              */
-            switch (operation.getMethod()) {
+            switch (testOperation.getMethod()) {
                 case "DELETE":
                     testCase.setMethod(PathItem.HttpMethod.DELETE);
                     break;
@@ -87,7 +87,7 @@ public class AbstractTestCaseGenerator {
             /*
               Set Path
              */
-            testCase.setPath(operation.getTestPath());
+            testCase.setPath(testOperation.getTestPath());
 
             /*
               Set Input Format
@@ -103,12 +103,12 @@ public class AbstractTestCaseGenerator {
               Set Body Parameters
              */
             // TODO: Redesign body parameter
-            generateParameterForAbstractTestCase(testCase, operation.getBodyParameter());
+            generateParameterForAbstractTestCase(testCase, testOperation.getBodyParameter());
 
             /*
               Set Test Parameters
              */
-            for (TestParameter testParameter :operation.getTestParameters()) {
+            for (TestParameter testParameter : testOperation.getGeneralParameters()) {
                 String generatorType = testParameter.getGenerator().getType();
                 if (generatorType == null) continue;
 
