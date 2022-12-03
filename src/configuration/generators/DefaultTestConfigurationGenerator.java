@@ -8,6 +8,7 @@ import specification.OpenApiSpecification;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class DefaultTestConfigurationGenerator {
     private final OpenApiSpecification openApiSpecification;
@@ -116,7 +117,7 @@ public class DefaultTestConfigurationGenerator {
                  */
                 var requestBodySchemaString = "";
                 try {
-                    requestBodySchemaString = path.getValue().getPut().getRequestBody().getContent()
+                    requestBodySchemaString = path.getValue().getPut().getRequestBody(). .getContent()
                             .get("application/json").getSchema().get$ref();
                 } catch (Exception e) {
                     System.out.println("No request body ...");
@@ -241,28 +242,32 @@ public class DefaultTestConfigurationGenerator {
         }
     }
 
-    private void generateParameters(List<io.swagger.v3.oas.models.parameters.Parameter> parameters, String requestBodySchema, Operation operation) {
-        List<Parameter> testParameters = new ArrayList<>();
-        List<Parameter> bodyParameters = new ArrayList<>();
+    private void generateParameters(List<io.swagger.v3.oas.models.parameters.Parameter> specificationParameters, String requestBodySchema, Operation operation) {
+        List<TestParameter> testParameters = new ArrayList<>();
+        TestParameter bodyParameter = new TestParameter();
 
         /*
          * Path Parameter, Query Parameter
          */
-        if (parameters != null) {
-            for (io.swagger.v3.oas.models.parameters.Parameter parameter: parameters) {
-                Parameter testParameter = new Parameter();
+        if (specificationParameters != null) {
+            for (io.swagger.v3.oas.models.parameters.Parameter specificationParameter: specificationParameters) {
+                TestParameter testParameter = new TestParameter();
 
-                testParameter.setName(parameter.getName());
-                testParameter.setIn(parameter.getIn());
+                testParameter.setName(specificationParameter.getName());
+                testParameter.setIn(specificationParameter.getIn());
                 testParameter.setWeight(0.5); // parameter is optional
 
-                if (parameter.getRequired() != null) {
-                    if (parameter.getRequired()) {
+                if (specificationParameter.getRequired() != null) {
+                    if (specificationParameter.getRequired()) {
                         testParameter.setWeight(1); // parameter is required
                     }
                 }
 
-                generateGenerators(testParameter, parameter.getSchema());
+                if (Objects.equals(specificationParameter.getIn(), "body")) {
+
+                }
+
+                generateGenerators(testParameter, specificationParameter.getSchema());
 
                 testParameters.add(testParameter);
             }
@@ -272,33 +277,53 @@ public class DefaultTestConfigurationGenerator {
          * Request Body Parameter
          */
         if (requestBodySchema != null) {
-
-
-            Schema requestBodyParameterSchema = determineSchemaFromString(requestBodySchema);
-            Map<String, Schema> properties = requestBodyParameterSchema.getProperties();
-
-
-            for (Map.Entry<String, Schema> property: properties.entrySet()) {
-                Parameter bodyParameter = new Parameter();
-
-                bodyParameter.setName(property.getKey());
-                bodyParameter.setIn("body");
-                bodyParameter.setWeight(1); // parameter is required
-
-                /*
-                 * Generate Parameter Generators
-                 */
-                generateGenerators(bodyParameter, property.getValue());
-
-                bodyParameters.add(bodyParameter);
-            }
+            generateBodyParameter(requestBodySchema);
+//            for (Map.Entry<String, Schema> property: properties.entrySet()) {
+//                Parameter bodyParameter = new Parameter();
+//
+//                bodyParameter.setName(property.getKey());
+//                bodyParameter.setIn("body");
+//                bodyParameter.setWeight(1); // parameter is required
+//
+//                /*
+//                 * Generate Parameter Generators
+//                 */
+//                generateGenerators(bodyParameter, property.getValue());
+//
+//                bodyParameters.add(bodyParameter);
+//            }
         }
 
         operation.setTestParameters(testParameters);
-        operation.setBodyParameters(bodyParameters);
+        operation.setBodyParameter(bodyParameter);
     }
 
-    private Schema determineSchemaFromString(String requestBodySchema) {
+    private void generateBodyParameter(String requestBodySchema) {
+        Schema requestBodyParameterSchema = extractSchemaFromRequestBody(requestBodySchema);
+
+        TestParameter bodyParameter = new TestParameter();
+        bodyParameter.setName(requestBodyParameterSchema.getName());
+        bodyParameter.setIn("body");
+        bodyParameter.setWeight(1);
+
+        Generator parameterGenerator = new Generator();
+        parameterGenerator.setType(requestBodyParameterSchema.getType());
+        // TODO: set parameter generators
+        // parameterGenerator.setGenParameters();
+        parameterGenerator.setValid(true);
+
+        bodyParameter.setGenerator(parameterGenerator);
+
+        Map<String, Schema> properties = requestBodyParameterSchema.getProperties();
+
+        properties.forEach((k, v) -> {
+
+        });
+
+        //bodyParameter.setParameters();
+    }
+
+    private Schema extractSchemaFromRequestBody(String requestBodySchema) {
         StringBuilder StringOfSchema = new StringBuilder();
         for (int i=requestBodySchema.length()-1; i>=0; i--) {
             if (requestBodySchema.charAt(i) == '/') break;
@@ -308,16 +333,13 @@ public class DefaultTestConfigurationGenerator {
         return openApiSpecification.getSpecification().getComponents().getSchemas().get(StringOfSchema.toString());
     }
 
-    private void generateGenerators(Parameter testParameter, Schema schema) {
+    private void generateGenerators(TestParameter testParameter, Schema schema) {
         // List of generators because we may want to use an invalid generator with a valid generator
         // to create valid and invalid test cases
-        List<Generator> generators = new ArrayList<>();
+        //List<Generator> generators = new ArrayList<>();
 
         Generator generator = new Generator();
         generator.setValid(true);
-
-        System.out.println("dhuklammmmmmmmmmmmmmmmmmmmmmmmmm--------------------");
-        System.out.println(schema.getType());
 
         /*
           Boolean Generator
@@ -342,61 +364,60 @@ public class DefaultTestConfigurationGenerator {
          * Generate Parameter Generator Constraints
          */
         generateGenParameters(generator, schema);
-        generators.add(generator);
-        testParameter.setGenerators(generators);
+        //generators.add(generator);
+        testParameter.setGenerator(generator);
     }
 
     private void generateGenParameters(Generator generator, Schema schema) {
-        List<GenParameter> genParameters = new ArrayList<>();
+        List<GeneratorParameter> generatorParameters = new ArrayList<>();
 
         if (schema.getType().equals("boolean")) {
             // gen parameters will be empty list
         }
         else if (schema.getType().equals("string")) {
-
             /*
               Min Length Parameter Values
              */
-            GenParameter genParameterMinLength = new GenParameter();
+            GeneratorParameter generatorParameterMinLength = new GeneratorParameter();
 
-            genParameterMinLength.setName("minLength");
+            generatorParameterMinLength.setName("minLength");
             ArrayList<String> minLengthValues = new ArrayList<>();
 
             if (schema.getMinLength() != null) {
                 minLengthValues.add(schema.getMinLength().toString());
-                genParameterMinLength.setValues(minLengthValues);
+                generatorParameterMinLength.setValues(minLengthValues);
             }
 
-            genParameters.add(genParameterMinLength);
+            generatorParameters.add(generatorParameterMinLength);
 
             /*
               Max Length Parameter Values
              */
-            GenParameter genParameterMaxLength = new GenParameter();
+            GeneratorParameter generatorParameterMaxLength = new GeneratorParameter();
 
-            genParameterMaxLength.setName("maxLength");
+            generatorParameterMaxLength.setName("maxLength");
             ArrayList<String> maxLengthValues = new ArrayList<>();
 
             if (schema.getMaxLength() != null) {
                 maxLengthValues.add(schema.getMaxLength().toString());
-                genParameterMaxLength.setValues(maxLengthValues);
+                generatorParameterMaxLength.setValues(maxLengthValues);
             }
 
-            genParameters.add(genParameterMaxLength);
+            generatorParameters.add(generatorParameterMaxLength);
 
             // TODO: include alphabetic
             // TODO: include numbers
             // TODO: include special char
 
-            generator.setGenParameters(genParameters);
+            generator.setGenParameters(generatorParameters);
         }
         else if (schema.getType().equals("integer")) {
             /*
               Data Type Values
              */
-            GenParameter genParameterType = new GenParameter();
+            GeneratorParameter generatorParameterType = new GeneratorParameter();
 
-            genParameterType.setName("type");
+            generatorParameterType.setName("type");
             ArrayList<String> typeValues = new ArrayList<>();
 
             // if (schema.getType() != null) {
@@ -404,60 +425,60 @@ public class DefaultTestConfigurationGenerator {
             // }
 
             typeValues.add(schema.getType());
-            genParameterType.setValues(typeValues);
+            generatorParameterType.setValues(typeValues);
 
-            genParameters.add(genParameterType);
+            generatorParameters.add(generatorParameterType);
 
             /*
              * Min Parameter Values
              */
-            GenParameter genParameterMinNumber = new GenParameter();
+            GeneratorParameter generatorParameterMinNumber = new GeneratorParameter();
 
-            genParameterMinNumber.setName("min");
+            generatorParameterMinNumber.setName("min");
             ArrayList<String> minValues = new ArrayList<>();
 
             if (schema.getMinimum() != null) {
                 minValues.add(schema.getMinimum().toString());
-                genParameterMinNumber.setValues(minValues);
+                generatorParameterMinNumber.setValues(minValues);
             }
 
-            genParameters.add(genParameterMinNumber);
+            generatorParameters.add(generatorParameterMinNumber);
 
 
             /*
              * Max Parameter Values
              */
-            GenParameter genParameterMaxNumber = new GenParameter();
+            GeneratorParameter generatorParameterMaxNumber = new GeneratorParameter();
 
-            genParameterMaxNumber.setName("max");
+            generatorParameterMaxNumber.setName("max");
             ArrayList<String> maxValues = new ArrayList<>();
 
             if (schema.getMaximum() != null) {
                 maxValues.add(schema.getMaximum().toString());
-                genParameterMaxNumber.setValues(maxValues);
+                generatorParameterMaxNumber.setValues(maxValues);
             }
 
-            genParameters.add(genParameterMaxNumber);
+            generatorParameters.add(generatorParameterMaxNumber);
         }
         // TODO: Complete it
         else if (schema.getType().equals("object")) {
             System.out.println("ami object generate parameters ae achi.............................");
 
-            GenParameter schemaType = new GenParameter();
+            GeneratorParameter schemaType = new GeneratorParameter();
 
             System.out.println(schema.getType());
             System.out.println(schema.getProperties());
 
             if (schema.get$ref() != null) {
                 System.out.println("hoi hoi hoi ............");
-                System.out.println(determineSchemaFromString(schema.get$ref()));
-                schemaType.setName(determineSchemaFromString(schema.get$ref()).toString());
+                System.out.println(extractSchemaFromRequestBody(schema.get$ref()));
+                schemaType.setName(extractSchemaFromRequestBody(schema.get$ref()).toString());
             }
 
-            genParameters.add(schemaType);
+            generatorParameters.add(schemaType);
         }
 
-        generator.setGenParameters(genParameters);
+        generator.setGenParameters(generatorParameters);
     }
 
     private void generateAuth(TestConfigurationObject testConfigurationObject) {

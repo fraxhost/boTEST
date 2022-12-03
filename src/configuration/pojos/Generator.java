@@ -3,9 +3,10 @@ package configuration.pojos;
 import java.util.List;
 
 public class Generator {
-    private String type;
-    private List<GenParameter> genParameters = null;
+    private String type; // Generator type
     private Boolean valid = true; // Whether or not the generator generates valid data
+    private List<GeneratorParameter> generatorParameters = null;
+
 
     public String getType() {
         return type;
@@ -15,12 +16,12 @@ public class Generator {
         this.type = type;
     }
 
-    public List<GenParameter> getGenParameters() {
-        return genParameters;
+    public List<GeneratorParameter> getGenParameters() {
+        return generatorParameters;
     }
 
-    public void setGenParameters(List<GenParameter> genParameters) {
-        this.genParameters = genParameters;
+    public void setGenParameters(List<GeneratorParameter> generatorParameters) {
+        this.generatorParameters = generatorParameters;
     }
 
     public Boolean getValid() {
@@ -35,7 +36,7 @@ public class Generator {
     public String toString() {
         return "Generator{" +
                 "\n\t\t\t\t\ttype='" + type + '\'' +
-                ", \n\t\t\t\t\tgenParameters=" + genParameters +
+                ", \n\t\t\t\t\tgenParameters=" + generatorParameters +
                 ", \n\t\t\t\t\tvalid=" + valid +
                 "\n\t\t\t\t}";
     }

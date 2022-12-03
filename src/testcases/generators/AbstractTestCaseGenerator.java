@@ -2,7 +2,7 @@ package testcases.generators;
 
 import configuration.pojos.Operation;
 import configuration.pojos.TestConfigurationObject;
-import configuration.pojos.Parameter;
+import configuration.pojos.TestParameter;
 import inputs.random.RandomBooleanGenerator;
 import inputs.random.RandomNumberGenerator;
 import inputs.random.RandomStringGenerator;
@@ -30,7 +30,6 @@ public class AbstractTestCaseGenerator {
 
         for (Operation operation : testConfigurationObject.getTestConfiguration().getOperations()) {
             TestCase testCase = new TestCase();
-
             /*
               Set Id
              */
@@ -93,34 +92,24 @@ public class AbstractTestCaseGenerator {
             /*
               Set Input Format
              */
-            // testCase.setInputFormat(operation.);
-            // operation.getRequestBody().getContent().keySet().stream().findFirst().get()
-            // TODO: Make it dynamic (xml/json)
             testCase.setInputFormat("application/json");
 
             /*
               Set Output Format
              */
-            // testCase.setOutputFormat();
-            // TODO: Make it dynamic (xml/json)
             testCase.setInputFormat("application/json");
 
             /*
               Set Body Parameters
              */
-            for (Parameter bodyParameter: operation.getBodyParameters()) {
-                // TODO: Make an object and insert all body params into it
-                //System.err.println(bodyParameter);
-
-                generateParameterForAbstractTestCase(testCase, bodyParameter);
-            }
+            // TODO: Redesign body parameter
+            generateParameterForAbstractTestCase(testCase, operation.getBodyParameter());
 
             /*
               Set Test Parameters
              */
-            for (Parameter testParameter :operation.getTestParameters()) {
-                // TODO: Remove later
-                String generatorType = testParameter.getGenerators().get(0).getType();
+            for (TestParameter testParameter :operation.getTestParameters()) {
+                String generatorType = testParameter.getGenerator().getType();
                 if (generatorType == null) continue;
 
                 generateParameterForAbstractTestCase(testCase, testParameter);
@@ -132,8 +121,8 @@ public class AbstractTestCaseGenerator {
         return testCases;
     }
 
-    private void generateParameterForAbstractTestCase (TestCase testCase, Parameter parameter) {
-        String generatorType = parameter.getGenerators().get(0).getType();
+    private void generateParameterForAbstractTestCase (TestCase testCase, TestParameter parameter) {
+        String generatorType = parameter.getGenerator().getType();
         String parameterType = parameter.getIn();
 
         String randomString = null;

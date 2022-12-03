@@ -25,7 +25,7 @@ TestConfiguration{
  				name='id', 
 				in='path', 
 				weight=1.0, 
-				testcases.generators=[Generator{
+				testcases.generators=Generator{
 					type='RandomNumberGenerator', 
 					genParameters=[GenParameter{
 						name='type', 
@@ -41,7 +41,7 @@ TestConfiguration{
 						objectValues=null
 					}], 
 					valid=true
-				}]
+				}
 			}], 
 			expectedResponse='null'
 		}, Operation{
@@ -58,7 +58,7 @@ TestConfiguration{
  				name='id', 
 				in='path', 
 				weight=1.0, 
-				testcases.generators=[Generator{
+				testcases.generators=Generator{
 					type='RandomNumberGenerator', 
 					genParameters=[GenParameter{
 						name='type', 
@@ -74,7 +74,7 @@ TestConfiguration{
 						objectValues=null
 					}], 
 					valid=true
-				}]
+				}
 			}], 
 			expectedResponse='null'
 		}, Operation{
@@ -103,7 +103,7 @@ TestConfiguration{
  				name='id', 
 				in='path', 
 				weight=1.0, 
-				testcases.generators=[Generator{
+				testcases.generators=Generator{
 					type='RandomNumberGenerator', 
 					genParameters=[GenParameter{
 						name='type', 
@@ -119,7 +119,7 @@ TestConfiguration{
 						objectValues=null
 					}], 
 					valid=true
-				}]
+				}
 			}], 
 			expectedResponse='null'
 		}]

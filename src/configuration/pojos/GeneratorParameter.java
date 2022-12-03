@@ -2,7 +2,7 @@ package configuration.pojos;
 
 import java.util.List;
 
-public class GenParameter {
+public class GeneratorParameter {
     private String name;
     private List<String> values = null;
     private List<Object> objectValues = null;
