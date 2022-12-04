@@ -93,6 +93,7 @@ public class RestAssuredTestWriter {
                 //.contentType(ContentType.JSON)
                 testClass.append("\t\t\t\t\t\t").append(".contentType(").append("ContentType.JSON").append(")").append("\n");
                 //testClass.append("\t\t\t\t\t\t").append(".contentType(")
+                // TODO: uncomment to run code properly
                 testClass.append("\t\t\t\t\t\t").append(".body(").append("\"").append(testCase.getBodyParameterAsJson())
                         .append("\")").append("\n");
             }

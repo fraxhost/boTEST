@@ -4,18 +4,117 @@ TestConfiguration{
 			operationId='null', 
 			method='GET', 
 			testParameters=[], 
+			bodyParameter=null, 
 			expectedResponse='null'
 		}, Operation{
 			testPath='/api/Category', 
 			operationId='null', 
 			method='POST', 
 			testParameters=[], 
+			bodyParameter=BodyParameter{
+ 				name='Category' 
+				generator='Generator{
+					type='RandomObjectGenerator', 
+					genParameters=[GenParameter{
+						name='null', 
+						values=null, 
+						objectValues=null
+					}], 
+					valid=true
+				}', 
+				properties='[BodyParameter{
+ 				name='id' 
+				generator='Generator{
+					type='RandomNumberGenerator', 
+					genParameters=[GenParameter{
+						name='type', 
+						values=[integer], 
+						objectValues=null
+					}, GenParameter{
+						name='min', 
+						values=null, 
+						objectValues=null
+					}, GenParameter{
+						name='max', 
+						values=null, 
+						objectValues=null
+					}], 
+					valid=true
+				}', 
+				properties='null'
+			}, BodyParameter{
+ 				name='name' 
+				generator='Generator{
+					type='RandomStringGenerator', 
+					genParameters=[GenParameter{
+						name='minLength', 
+						values=null, 
+						objectValues=null
+					}, GenParameter{
+						name='maxLength', 
+						values=null, 
+						objectValues=null
+					}], 
+					valid=true
+				}', 
+				properties='null'
+			}]'
+			}, 
 			expectedResponse='null'
 		}, Operation{
 			testPath='/api/Category', 
 			operationId='null', 
 			method='PUT', 
 			testParameters=[], 
+			bodyParameter=BodyParameter{
+ 				name='Category' 
+				generator='Generator{
+					type='RandomObjectGenerator', 
+					genParameters=[GenParameter{
+						name='null', 
+						values=null, 
+						objectValues=null
+					}], 
+					valid=true
+				}', 
+				properties='[BodyParameter{
+ 				name='id' 
+				generator='Generator{
+					type='RandomNumberGenerator', 
+					genParameters=[GenParameter{
+						name='type', 
+						values=[integer], 
+						objectValues=null
+					}, GenParameter{
+						name='min', 
+						values=null, 
+						objectValues=null
+					}, GenParameter{
+						name='max', 
+						values=null, 
+						objectValues=null
+					}], 
+					valid=true
+				}', 
+				properties='null'
+			}, BodyParameter{
+ 				name='name' 
+				generator='Generator{
+					type='RandomStringGenerator', 
+					genParameters=[GenParameter{
+						name='minLength', 
+						values=null, 
+						objectValues=null
+					}, GenParameter{
+						name='maxLength', 
+						values=null, 
+						objectValues=null
+					}], 
+					valid=true
+				}', 
+				properties='null'
+			}]'
+			}, 
 			expectedResponse='null'
 		}, Operation{
 			testPath='/api/Category/{id}', 
@@ -25,7 +124,7 @@ TestConfiguration{
  				name='id', 
 				in='path', 
 				weight=1.0, 
-				testcases.generators=[Generator{
+				generators=Generator{
 					type='RandomNumberGenerator', 
 					genParameters=[GenParameter{
 						name='type', 
@@ -41,14 +140,16 @@ TestConfiguration{
 						objectValues=null
 					}], 
 					valid=true
-				}]
+				}
 			}], 
+			bodyParameter=null, 
 			expectedResponse='null'
 		}, Operation{
 			testPath='/api/Pet', 
 			operationId='null', 
 			method='GET', 
 			testParameters=[], 
+			bodyParameter=null, 
 			expectedResponse='null'
 		}, Operation{
 			testPath='/api/Pet/{id}', 
@@ -58,7 +159,7 @@ TestConfiguration{
  				name='id', 
 				in='path', 
 				weight=1.0, 
-				testcases.generators=[Generator{
+				generators=Generator{
 					type='RandomNumberGenerator', 
 					genParameters=[GenParameter{
 						name='type', 
@@ -74,26 +175,126 @@ TestConfiguration{
 						objectValues=null
 					}], 
 					valid=true
-				}]
+				}
 			}], 
+			bodyParameter=null, 
 			expectedResponse='null'
 		}, Operation{
 			testPath='/api/PhotoUrl', 
 			operationId='null', 
 			method='GET', 
 			testParameters=[], 
+			bodyParameter=null, 
 			expectedResponse='null'
 		}, Operation{
 			testPath='/api/PhotoUrl', 
 			operationId='null', 
 			method='POST', 
 			testParameters=[], 
+			bodyParameter=BodyParameter{
+ 				name='PhotoUrl' 
+				generator='Generator{
+					type='RandomObjectGenerator', 
+					genParameters=[GenParameter{
+						name='null', 
+						values=null, 
+						objectValues=null
+					}], 
+					valid=true
+				}', 
+				properties='[BodyParameter{
+ 				name='id' 
+				generator='Generator{
+					type='RandomNumberGenerator', 
+					genParameters=[GenParameter{
+						name='type', 
+						values=[integer], 
+						objectValues=null
+					}, GenParameter{
+						name='min', 
+						values=null, 
+						objectValues=null
+					}, GenParameter{
+						name='max', 
+						values=null, 
+						objectValues=null
+					}], 
+					valid=true
+				}', 
+				properties='null'
+			}, BodyParameter{
+ 				name='url' 
+				generator='Generator{
+					type='RandomStringGenerator', 
+					genParameters=[GenParameter{
+						name='minLength', 
+						values=null, 
+						objectValues=null
+					}, GenParameter{
+						name='maxLength', 
+						values=null, 
+						objectValues=null
+					}], 
+					valid=true
+				}', 
+				properties='null'
+			}]'
+			}, 
 			expectedResponse='null'
 		}, Operation{
 			testPath='/api/PhotoUrl', 
 			operationId='null', 
 			method='PUT', 
 			testParameters=[], 
+			bodyParameter=BodyParameter{
+ 				name='PhotoUrl' 
+				generator='Generator{
+					type='RandomObjectGenerator', 
+					genParameters=[GenParameter{
+						name='null', 
+						values=null, 
+						objectValues=null
+					}], 
+					valid=true
+				}', 
+				properties='[BodyParameter{
+ 				name='id' 
+				generator='Generator{
+					type='RandomNumberGenerator', 
+					genParameters=[GenParameter{
+						name='type', 
+						values=[integer], 
+						objectValues=null
+					}, GenParameter{
+						name='min', 
+						values=null, 
+						objectValues=null
+					}, GenParameter{
+						name='max', 
+						values=null, 
+						objectValues=null
+					}], 
+					valid=true
+				}', 
+				properties='null'
+			}, BodyParameter{
+ 				name='url' 
+				generator='Generator{
+					type='RandomStringGenerator', 
+					genParameters=[GenParameter{
+						name='minLength', 
+						values=null, 
+						objectValues=null
+					}, GenParameter{
+						name='maxLength', 
+						values=null, 
+						objectValues=null
+					}], 
+					valid=true
+				}', 
+				properties='null'
+			}]'
+			}, 
 			expectedResponse='null'
 		}, Operation{
 			testPath='/api/PhotoUrl/{id}', 
@@ -103,7 +304,7 @@ TestConfiguration{
  				name='id', 
 				in='path', 
 				weight=1.0, 
-				testcases.generators=[Generator{
+				generators=Generator{
 					type='RandomNumberGenerator', 
 					genParameters=[GenParameter{
 						name='type', 
@@ -119,8 +320,9 @@ TestConfiguration{
 						objectValues=null
 					}], 
 					valid=true
-				}]
+				}
 			}], 
+			bodyParameter=null, 
 			expectedResponse='null'
 		}]
 	}

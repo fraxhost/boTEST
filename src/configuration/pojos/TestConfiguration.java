@@ -3,11 +3,11 @@ package configuration.pojos;
 import java.util.List;
 
 public class TestConfiguration {
-    private List<Operation> operations = null;
-    public List<Operation> getOperations() {
+    private List<TestOperation> operations = null;
+    public List<TestOperation> getOperations() {
         return operations;
     }
-    public void setOperations(List<Operation> operations) {
+    public void setOperations(List<TestOperation> operations) {
         this.operations = operations;
     }
 

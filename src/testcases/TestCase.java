@@ -30,7 +30,7 @@ public class TestCase {
     // form-data parameters
     private Map<String, String> formParameters;
     // body parameter
-    private Map<String, String> bodyParameter;
+    private Map<String, Object> bodyParameter;
 
     public String getId() {
         return id;
@@ -128,37 +128,42 @@ public class TestCase {
         this.formParameters = formParameters;
     }
 
-    public Map<String, String> getBodyParameter() {
+    public Map<String, Object> getBodyParameter() {
         return bodyParameter;
     }
 
     public String getBodyParameterAsJson() {
-        StringBuilder sb = new StringBuilder();
+        String json = bodyParameter.toString()
+                .replace("properties=", "")
+                .replace("=",":")
+                .replace("\"", "\\\"");
 
-        sb.append("{");
-        bodyParameter.forEach((key, value) -> {
-            String name = key.substring(0, key.indexOf(':'));
-            String type = key.substring(key.indexOf(':')+1, key.length());
-
-            if (type.equals("string")) {
-                sb.append("\\\"").append(name).append("\\\"").append(": ").append("\\\"").append(value).append("\\\"");
-            } else {
-                sb.append("\\\"").append(name).append("\\\"").append(": ").append(value);
-            }
-
-            sb.append(",");
-        });
-        sb.setLength(sb.length() - 1); // removing the last unnecessary ,
-        sb.append("}");
-
-        return sb.toString();
+        return json;
     }
 
-//    public Map<String, String> getBodyParameterAsSingleObject() {
-//        return bodyParameter;
+//    public String getBodyParameterAsJson() {
+//        StringBuilder sb = new StringBuilder();
+//
+//        sb.append("{");
+//        bodyParameter.forEach((key, value) -> {
+//            String name = key.substring(0, key.indexOf(':'));
+//            String type = key.substring(key.indexOf(':')+1, key.length());
+//
+//            if (type.equals("string")) {
+//                sb.append("\\\"").append(name).append("\\\"").append(": ").append("\\\"").append(value).append("\\\"");
+//            } else {
+//                sb.append("\\\"").append(name).append("\\\"").append(": ").append(value);
+//            }
+//
+//            sb.append(",");
+//        });
+//        sb.setLength(sb.length() - 1); // removing the last unnecessary ,
+//        sb.append("}");
+//
+//        return sb.toString();
 //    }
 
-    public void setBodyParameter(Map<String, String> bodyParameter) {
+    public void setBodyParameter(Map<String, Object> bodyParameter) {
         this.bodyParameter = bodyParameter;
     }
 
@@ -177,7 +182,7 @@ public class TestCase {
                 ", \n\tpathParameters=" + pathParameters +
                 ", \n\tqueryParameters=" + queryParameters +
                 ", \n\tformParameters=" + formParameters +
-                ", \n\tbodyParameter='" + bodyParameter + '\'' +
+                ", \n\tbodyParameter=" + bodyParameter +
                 "\n}";
     }
 }

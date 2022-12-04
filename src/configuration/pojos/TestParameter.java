@@ -2,11 +2,11 @@ package configuration.pojos;
 
 import java.util.List;
 
-public class Parameter {
+public class TestParameter {
     private String name;
     private String in;
     private double weight;
-    private List<Generator> generators;
+    private TestGenerator generator;
 
     public String getName() {
         return name;
@@ -32,12 +32,12 @@ public class Parameter {
         this.weight = weight;
     }
 
-    public List<Generator> getGenerators() {
-        return generators;
+    public TestGenerator getGenerators() {
+        return generator;
     }
 
-    public void setGenerators(List<Generator> generators) {
-        this.generators = generators;
+    public void setGenerator(TestGenerator generator) {
+        this.generator = generator;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Parameter {
                 " \t\t\t\tname='" + name + '\'' +
                 ", \n\t\t\t\tin='" + in + '\'' +
                 ", \n\t\t\t\tweight=" + weight +
-                ", \n\t\t\t\ttestcases.generators=" + generators +
+                ", \n\t\t\t\tgenerators=" + generator +
                 "\n\t\t\t}";
     }
 }

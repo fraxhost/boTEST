@@ -14,12 +14,13 @@ import writers.RestAssuredTestWriter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     //private static String openApiSpecificationPath= "src/resources/petstore/small-petstore.yaml";
     private static String jsonOASPath = "src/resources/botest/botest.json";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         /**
          * Logger Configuration
          */
@@ -89,6 +90,7 @@ public class Main {
                         openApiSpecification.getSpecification().getInfo().getTitle() + ".js",
                 testClass);
 
+        TimeUnit.SECONDS.sleep(2);
 
         /**
          * Execute Tests

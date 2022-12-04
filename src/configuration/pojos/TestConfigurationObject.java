@@ -1,14 +1,14 @@
 package configuration.pojos;
 
 public class TestConfigurationObject {
-    private Auth auth;
+    private TestAuth auth;
     private TestConfiguration testConfiguration;
 
-    public Auth getAuth() {
+    public TestAuth getAuth() {
         return auth;
     }
 
-    public void setAuth(Auth auth) {
+    public void setAuth(TestAuth auth) {
         this.auth = auth;
     }
 
