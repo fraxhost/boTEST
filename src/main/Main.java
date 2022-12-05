@@ -40,7 +40,7 @@ public class Main {
         System.out.println("##########");
         System.out.println("Specification Loaded...");
         System.out.println("##########");
-        BoTestIO.writeToFile("target\\api-specification\\" +
+        BoTestIO.writeToFile("output\\api-specification\\" +
                         openApiSpecification.getSpecification().getInfo().getTitle() + ".js",
                         openApiSpecification.getSpecification().toString());
 
@@ -55,7 +55,7 @@ public class Main {
         System.out.println("##########");
         System.out.println("Test Configuration Generated...");
         System.out.println("##########");
-        BoTestIO.writeToFile("target\\test-configuration\\" +
+        BoTestIO.writeToFile("output\\test-configuration\\" +
                         openApiSpecification.getSpecification().getInfo().getTitle() + ".js",
                         testConfigurationObject.getTestConfiguration().toString());
 
@@ -71,7 +71,7 @@ public class Main {
         System.out.println("##########");
         System.out.println("Abstract Test Case Generated...");
         System.out.println("##########");
-        BoTestIO.writeToFile("target\\test-cases\\" +
+        BoTestIO.writeToFile("output\\test-cases\\" +
                         openApiSpecification.getSpecification().getInfo().getTitle() + ".js",
                         testCases.toString());
 
@@ -86,7 +86,7 @@ public class Main {
         System.out.println("##########");
         System.out.println("REST Assured Tests Generated...");
         System.out.println("##########");
-        BoTestIO.writeToFile("target\\test-classes\\" +
+        BoTestIO.writeToFile("output\\test-classes\\" +
                         openApiSpecification.getSpecification().getInfo().getTitle() + ".js",
                 testClass);
 
