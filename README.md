@@ -1,0 +1,1 @@
+**BOTest** is a desktop tool for automated black box testing of RESTful Web APIs. It generates and executes test cases from OpenAPI specifications to detect faults. The tool uses Java, JUnit, and RestAssured, and produces detailed HTML reports with Allure Report. Input includes an OpenAPI file and server URI, and output is a comprehensive test report.
